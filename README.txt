@@ -99,7 +99,7 @@ npm install express
 npm install axios
 npm install sqlite3
 
-## Running the Application
+ Running the Application
 
 Start the server:
 
@@ -109,7 +109,7 @@ Server will run on:
 
 http://localhost:3000
 
-## API Endpoints
+ API Endpoints
 
 1. Fetch GitHub User and Store in Database
 
@@ -226,9 +226,5 @@ Future Enhancements
 * Add GitHub repository details storage
 * Create dashboard for analytics
 
-## Author
 
-Project: GitHub User Information Fetcher
-Backend: Node.js + Express.js
-Database: SQLite3
-API Source: GitHub REST API
+
