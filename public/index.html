@@ -1,1 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub User Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
 
+        input {
+            padding: 8px;
+            width: 250px;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            width: 400px;
+        }
+
+        img {
+            width: 100px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>GitHub User Search</h2>
+
+    <input
+        type="text"
+        id="username"
+        placeholder="Enter GitHub username"
+    >
+
+    <button onclick="fetchUser()">
+        Fetch User
+    </button>
+
+    <div id="result"></div>
+
+    <script>
+        async function fetchUser() {
+            const username =
+                document.getElementById("username").value.trim();
+
+            if (!username) {
+                alert("Please enter a username");
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `/api/github/${username}`
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message);
+                }
+
+                document.getElementById("result").innerHTML = `
+                    <img src="${data.avatar_url}" alt="Avatar">
+                    <h3>${data.name || data.login}</h3>
+                    <p><b>Username:</b> ${data.login}</p>
+                    <p><b>Followers:</b> ${data.followers}</p>
+                    <p><b>Following:</b> ${data.following}</p>
+                    <p><b>Public Repos:</b> ${data.public_repos}</p>
+                    <p><b>Location:</b> ${data.location || "N/A"}</p>
+                    <p>
+                        <a href="${data.html_url}" target="_blank">
+                            View Profile
+                        </a>
+                    </p>
+                `;
+            }
+            catch (err) {
+                document.getElementById("result").innerHTML =
+                    `<p style="color:red">${err.message}</p>`;
+            }
+        }
+    </script>
+
+</body>
+</html>
